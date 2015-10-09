@@ -17,6 +17,7 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 
 public class StringAlignerView extends JPanel implements IStringAlignerView, ActionListener, KeyListener  {
@@ -29,6 +30,8 @@ public class StringAlignerView extends JPanel implements IStringAlignerView, Act
 	private JTextField txtSecondWord;
 	private JButton btnAlign;
         private Object [][] grid;
+        private DefaultTableModel model;
+         private JTable table;
 	
 	/** Panel components */
         	
@@ -57,13 +60,35 @@ public class StringAlignerView extends JPanel implements IStringAlignerView, Act
                 btnAlign.setBounds(253, 218, 89, 23);
                 add(btnAlign);
                 btnAlign.addActionListener(this);
+                
+                String[] columns = {""};
+                model = new DefaultTableModel(null,columns);
+
+                table = new JTable();
+                table.setModel(model);
+                table.setTableHeader(null);
+
+                TableColumn column = null;
+                for (int i = 0; i < table.getColumnCount(); i++) {
+                    column = table.getColumnModel().getColumn(i);
+                   column.setMaxWidth(25);
+
+        }
+
+        table.setBounds(350, 10, 425, 300);
+
+        add(table);
 
         }
 
         public void DisplayTable(Object [][] data)
         {
-         String[] columns = {""};
-        JTable table = new JTable(data, columns);
+            JScrollPane scrollPane = new JScrollPane();
+            //String[] columns = {"", ""};
+            model = new DefaultTableModel(data,null);
+
+        table.setModel(model);
+        table.setTableHeader(null);
 
         TableColumn column = null;
         for (int i = 0; i < table.getColumnCount(); i++) {
@@ -74,9 +99,10 @@ public class StringAlignerView extends JPanel implements IStringAlignerView, Act
         }
 
         table.setBounds(350, 10, 425, 300);
-
-        add(table);
-        //mainFrame.revalidate();
+        scrollPane.getViewport().add(table);
+        add(scrollPane);
+        //add(table);
+        //mainFrame.frameRevalidate();
         }
 
         @Override
