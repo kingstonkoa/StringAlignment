@@ -24,11 +24,11 @@ public class MainFrame extends JFrame {
 	public void renderMainView() {
 		/** Show Chat View */
 		mainView = new StringAlignerView(this);
-        frameRevalidate();
+                frameRevalidate();
 		this.setContentPane((JPanel) mainView);
 	}
 	
-	public void frameRevalidate()
+        public void frameRevalidate()
 	{
 		validate();
 		repaint();
