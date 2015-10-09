@@ -60,7 +60,13 @@ public class StringAlignerController {
                
             }
             
-            // testing
+           
+            
+        }
+        
+        public void PrintTableContents()
+        {
+         
             for(int i = 0; i < grid.length; i++)
 {
     for(int j = 0; j < grid[i].length; j++)
@@ -70,7 +76,6 @@ public class StringAlignerController {
     }
     System.out.println();
 }
-            
         }
 
 }
