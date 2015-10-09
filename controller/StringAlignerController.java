@@ -7,7 +7,7 @@ public class StringAlignerController {
 	
     /** Panel */
     private IStringAlignerView stringAlignerView;
-
+    
     private String firstWord;
     private String secondWord;
     private Object [][] grid;
