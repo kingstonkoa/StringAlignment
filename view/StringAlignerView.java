@@ -10,6 +10,7 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.border.Border;
 
+import controller.BacktrackController;
 import controller.StringAlignerController;
 
 import javax.swing.JButton;
@@ -23,6 +24,7 @@ public class StringAlignerView extends JPanel implements IStringAlignerView, Act
 
 	/** Controller */
 	private StringAlignerController controller;
+	private BacktrackController backtrackController;
 	private JTextField txtFirstWord;
 	private JTextField txtSecondWord;
 	private JButton btnAlign;
@@ -33,6 +35,7 @@ public class StringAlignerView extends JPanel implements IStringAlignerView, Act
         public StringAlignerView(MainFrame mainFrame) {
                 setLayout(null);
                 controller = new StringAlignerController(this);
+                backtrackController = new BacktrackController(this);
 
                 //JLabel lblSex = new JLabel("SEX");
                 //lblSex.setBounds(216, 5, 18, 14);
@@ -108,6 +111,7 @@ public class StringAlignerView extends JPanel implements IStringAlignerView, Act
                         controller.computeTableContents();
                         controller.PrintTableContents();
                         grid = controller.getGrid();
+                        backtrackController.storeInputs(firstWord, secondWord, grid);
                         DisplayTable(grid);
                 }
 
