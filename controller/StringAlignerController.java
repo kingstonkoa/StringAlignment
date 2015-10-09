@@ -11,6 +11,8 @@ public class StringAlignerController {
 	private String firstWord;
 	private String secondWord;
 	private Object [][] grid;
+        private int rowLength;
+        private int colLength;
 	
 	public StringAlignerController(StringAlignerView stringAlignerView) 
         {
@@ -25,8 +27,8 @@ public class StringAlignerController {
 
         public void buildAndInitializeTable()
         {
-            int rowLength = firstWord.length()+2;
-            int colLength = secondWord.length()+2;
+            this.rowLength = firstWord.length()+2;
+            this.colLength = secondWord.length()+2;
             
             //* build the grid*/
             grid = new Object[rowLength][colLength];
@@ -60,22 +62,49 @@ public class StringAlignerController {
                
             }
             
-           
-            
         }
         
         public void PrintTableContents()
         {
          
-            for(int i = 0; i < grid.length; i++)
-{
-    for(int j = 0; j < grid[i].length; j++)
-    {
-        System.out.print(grid[i][j]);
-        if(j < grid[i].length - 1) System.out.print(" ");
-    }
-    System.out.println();
+        for(int i = 0; i < grid.length; i++)
+            {
+                for(int j = 0; j < grid[i].length; j++)
+                   {
+                    System.out.print(grid[i][j]);
+                    if(j < grid[i].length - 1) System.out.print(" ");
+                    }
+            System.out.println();
 }
         }
+
+        public void computeTableContents()
+        {
+            int x, y, z;
+        for(int i = rowLength - 3; i > -1; i--)
+        {
+            for(int j = 2; j < colLength; j++)
+            {
+                x = (int) grid[i][j-1] + 1;
+                y = (int) grid[i+1][j] + 1;
+                z = (int)grid[i+1][j-1];
+                if(grid[i][0].equals(grid[rowLength-1][j]))
+                z += 0;
+                else
+                    z += 2;
+                
+                
+            grid[i][j] = pickLeast(x,y,z);
+            }
+        }
+        }
+
+    public int pickLeast(int x, int y, int z)
+    {
+        int smallest = x;
+        if (smallest > y) smallest = y;
+        if (smallest > z) smallest = z;
+        return smallest;
+    }
 
 }

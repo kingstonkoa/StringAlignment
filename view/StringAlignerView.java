@@ -104,6 +104,8 @@ public class StringAlignerView extends JPanel implements IStringAlignerView, Act
 			
 			controller.storeUserInputs(firstWord, secondWord);
                         controller.buildAndInitializeTable();
+                        controller.computeTableContents();
+                        controller.PrintTableContents();
 		}
 		
 	}
