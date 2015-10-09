@@ -14,6 +14,9 @@ import controller.StringAlignerController;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.table.TableColumn;
 
 public class StringAlignerView extends JPanel implements IStringAlignerView, ActionListener, KeyListener  {
 	private MainFrame mainFrame;
@@ -30,9 +33,9 @@ public class StringAlignerView extends JPanel implements IStringAlignerView, Act
 		setLayout(null);
 		controller = new StringAlignerController(this);
 		
-		JLabel lblSex = new JLabel("SEX");
-		lblSex.setBounds(216, 5, 18, 14);
-		add(lblSex);
+		//JLabel lblSex = new JLabel("SEX");
+		//lblSex.setBounds(216, 5, 18, 14);
+		//add(lblSex);
 		
 		txtFirstWord = new JTextField();
 		txtFirstWord.setText("First word");
@@ -50,8 +53,27 @@ public class StringAlignerView extends JPanel implements IStringAlignerView, Act
 		btnAlign.setBounds(253, 218, 89, 23);
 		add(btnAlign);
 		btnAlign.addActionListener(this);
-
+                
 	}
+        
+        public void DisplayTable(Object [][] data)
+        {
+         String[] columns = {""};
+        JTable table = new JTable(data, columns);
+        
+        TableColumn column = null;
+        for (int i = 0; i < table.getColumnCount(); i++) {
+            column = table.getColumnModel().getColumn(i);
+            
+                column.setMaxWidth(25);
+         
+        }
+        
+        table.setBounds(350, 10, 425, 300);
+         
+        add(table);
+        mainFrame.revalidate();
+        }
 
 	@Override
 	public void keyPressed(KeyEvent ke) {
@@ -77,9 +99,11 @@ public class StringAlignerView extends JPanel implements IStringAlignerView, Act
 		if(ae.getSource() == btnAlign) {
 			String firstWord = txtFirstWord.getText();
 			String secondWord = txtSecondWord.getText();
-			System.out.println("SEX: " + firstWord);
+			System.out.println("First Word: " + firstWord);
+                        System.out.println("Second Word: " + secondWord);
 			
 			controller.storeUserInputs(firstWord, secondWord);
+                        controller.buildAndInitializeTable();
 		}
 		
 	}
