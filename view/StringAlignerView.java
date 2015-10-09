@@ -138,6 +138,7 @@ public class StringAlignerView extends JPanel implements IStringAlignerView, Act
                         controller.PrintTableContents();
                         grid = controller.getGrid();
                         backtrackController.storeInputs(firstWord, secondWord, grid);
+                        backtrackController.backtrackAndSaveValues();
                         DisplayTable(grid);
                 }
 
