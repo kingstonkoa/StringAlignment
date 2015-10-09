@@ -26,87 +26,90 @@ public class StringAlignerView extends JPanel implements IStringAlignerView, Act
 	private JTextField txtFirstWord;
 	private JTextField txtSecondWord;
 	private JButton btnAlign;
+        private Object [][] grid;
 	
 	/** Panel components */
         	
-	public StringAlignerView(MainFrame mainFrame) {
-		setLayout(null);
-		controller = new StringAlignerController(this);
-		
-		//JLabel lblSex = new JLabel("SEX");
-		//lblSex.setBounds(216, 5, 18, 14);
-		//add(lblSex);
-		
-		txtFirstWord = new JTextField();
-		txtFirstWord.setText("First word");
-		txtFirstWord.setBounds(61, 219, 86, 20);
-		add(txtFirstWord);
-		txtFirstWord.setColumns(10);
-		
-		txtSecondWord = new JTextField();
-		txtSecondWord.setText("Second word");
-		txtSecondWord.setBounds(157, 219, 86, 20);
-		add(txtSecondWord);
-		txtSecondWord.setColumns(10);
-		
-		btnAlign = new JButton("Align");
-		btnAlign.setBounds(253, 218, 89, 23);
-		add(btnAlign);
-		btnAlign.addActionListener(this);
-                
-	}
-        
+        public StringAlignerView(MainFrame mainFrame) {
+                setLayout(null);
+                controller = new StringAlignerController(this);
+
+                //JLabel lblSex = new JLabel("SEX");
+                //lblSex.setBounds(216, 5, 18, 14);
+                //add(lblSex);
+
+                txtFirstWord = new JTextField();
+                txtFirstWord.setText("First word");
+                txtFirstWord.setBounds(61, 219, 86, 20);
+                add(txtFirstWord);
+                txtFirstWord.setColumns(10);
+
+                txtSecondWord = new JTextField();
+                txtSecondWord.setText("Second word");
+                txtSecondWord.setBounds(157, 219, 86, 20);
+                add(txtSecondWord);
+                txtSecondWord.setColumns(10);
+
+                btnAlign = new JButton("Align");
+                btnAlign.setBounds(253, 218, 89, 23);
+                add(btnAlign);
+                btnAlign.addActionListener(this);
+
+        }
+
         public void DisplayTable(Object [][] data)
         {
          String[] columns = {""};
         JTable table = new JTable(data, columns);
-        
+
         TableColumn column = null;
         for (int i = 0; i < table.getColumnCount(); i++) {
             column = table.getColumnModel().getColumn(i);
-            
+
                 column.setMaxWidth(25);
-         
+
         }
-        
+
         table.setBounds(350, 10, 425, 300);
-         
+
         add(table);
-        mainFrame.revalidate();
+        //mainFrame.revalidate();
         }
 
-	@Override
-	public void keyPressed(KeyEvent ke) {
-//		if(ke.getKeyCode() == KeyEvent.VK_ENTER && ke.getSource() == chatInputTxtField)	{
-//            
-//		}
-	}
+        @Override
+        public void keyPressed(KeyEvent ke) {
+        //		if(ke.getKeyCode() == KeyEvent.VK_ENTER && ke.getSource() == chatInputTxtField)	{
+        //            
+        //		}
+        }
 
-	@Override
-	public void keyReleased(KeyEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
+        @Override
+        public void keyReleased(KeyEvent arg0) {
+                // TODO Auto-generated method stub
 
-	@Override
-	public void keyTyped(KeyEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
+        }
 
-	@Override
-	public void actionPerformed(ActionEvent ae) {
-		if(ae.getSource() == btnAlign) {
-			String firstWord = txtFirstWord.getText();
-			String secondWord = txtSecondWord.getText();
-			System.out.println("First Word: " + firstWord);
+        @Override
+        public void keyTyped(KeyEvent arg0) {
+                // TODO Auto-generated method stub
+
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent ae) {
+                if(ae.getSource() == btnAlign) {
+                        String firstWord = txtFirstWord.getText();
+                        String secondWord = txtSecondWord.getText();
+                        System.out.println("First Word: " + firstWord);
                         System.out.println("Second Word: " + secondWord);
-			
-			controller.storeUserInputs(firstWord, secondWord);
+
+                        controller.storeUserInputs(firstWord, secondWord);
                         controller.buildAndInitializeTable();
                         controller.computeTableContents();
                         controller.PrintTableContents();
-		}
-		
-	}
+                        grid = controller.getGrid();
+                        DisplayTable(grid);
+                }
+
+        }
 }
