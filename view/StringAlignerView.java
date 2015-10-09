@@ -12,6 +12,8 @@ import javax.swing.border.Border;
 
 import controller.BacktrackController;
 import controller.StringAlignerController;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
@@ -50,13 +52,23 @@ public class StringAlignerView extends JPanel implements IStringAlignerView, Act
                 txtFirstWord.setBounds(61, 219, 86, 20);
                 add(txtFirstWord);
                 txtFirstWord.setColumns(10);
+                txtFirstWord.addMouseListener(new MouseAdapter() {
+                public void mouseClicked(MouseEvent e) {
+                txtFirstWord.setText("");
+                    }
+                 });
 
                 txtSecondWord = new JTextField();
                 txtSecondWord.setText("Second word");
                 txtSecondWord.setBounds(157, 219, 86, 20);
                 add(txtSecondWord);
                 txtSecondWord.setColumns(10);
-
+                txtSecondWord.addMouseListener(new MouseAdapter() {
+                public void mouseClicked(MouseEvent e) {
+                txtSecondWord.setText("");
+                    }
+                 });
+                
                 btnAlign = new JButton("Align");
                 btnAlign.setBounds(253, 218, 89, 23);
                 add(btnAlign);
