@@ -12,6 +12,7 @@ import javax.swing.border.Border;
 
 import controller.BacktrackController;
 import controller.StringAlignerController;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -61,48 +62,30 @@ public class StringAlignerView extends JPanel implements IStringAlignerView, Act
                 add(btnAlign);
                 btnAlign.addActionListener(this);
                 
-                String[] columns = {""};
-                model = new DefaultTableModel(null,columns);
-
-                table = new JTable();
+                Object rowData[][] = {};
+                Object columnNames[] = {};
+                table = new JTable(rowData, columnNames);
+           
+                JScrollPane scrollPane = new JScrollPane();
+                model = new DefaultTableModel(rowData,columnNames);
                 table.setModel(model);
-                table.setTableHeader(null);
-
-                TableColumn column = null;
-                for (int i = 0; i < table.getColumnCount(); i++) {
-                    column = table.getColumnModel().getColumn(i);
-                   column.setMaxWidth(25);
-
-        }
-
-        table.setBounds(350, 10, 425, 300);
-
-        add(table);
-
+                
+                scrollPane.setBounds(350, 10, 425, 300);
+                scrollPane.getViewport().add(table);
+                add(scrollPane);
+        
         }
 
         public void DisplayTable(Object [][] data)
         {
-            JScrollPane scrollPane = new JScrollPane();
-            //String[] columns = {"", ""};
-            model = new DefaultTableModel(data,null);
-
-        table.setModel(model);
-        table.setTableHeader(null);
-
-        TableColumn column = null;
-        for (int i = 0; i < table.getColumnCount(); i++) {
-            column = table.getColumnModel().getColumn(i);
-
-                column.setMaxWidth(25);
-
-        }
-
-        table.setBounds(350, 10, 425, 300);
-        scrollPane.getViewport().add(table);
-        add(scrollPane);
-        //add(table);
-        //mainFrame.frameRevalidate();
+            ArrayList<String> col = new ArrayList<>();
+            for(int i=0; i< data[0].length; i++)
+                col.add("");
+           String column[]=col.toArray(new String[col.size()]);
+           // table = new JTable(data, col );
+            model = new DefaultTableModel(data,column);
+            table.setModel(model);
+          
         }
 
         @Override
