@@ -22,8 +22,8 @@ public class StringAlignerController {
 
     public void storeUserInputs(String firstWord, String secondWord) 
     {
-            this.firstWord = firstWord;
-            this.secondWord = secondWord;
+            this.firstWord = firstWord.toLowerCase();
+            this.secondWord = secondWord.toLowerCase();
     }
 
     public void buildAndInitializeTable()
