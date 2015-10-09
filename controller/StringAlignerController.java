@@ -20,5 +20,9 @@ public class StringAlignerController {
 		this.firstWord = firstWord;
 		this.secondWord = secondWord;
 	}
+	
+	public void formGrid() {
+		
+	}
 
 }
