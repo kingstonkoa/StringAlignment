@@ -12,6 +12,9 @@ import javax.swing.border.Border;
 
 import controller.BacktrackController;
 import controller.StringAlignerController;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -49,60 +52,52 @@ public class StringAlignerView extends JPanel implements IStringAlignerView, Act
                 txtFirstWord.setBounds(61, 219, 86, 20);
                 add(txtFirstWord);
                 txtFirstWord.setColumns(10);
+                txtFirstWord.addMouseListener(new MouseAdapter() {
+                public void mouseClicked(MouseEvent e) {
+                txtFirstWord.setText("");
+                    }
+                 });
 
                 txtSecondWord = new JTextField();
                 txtSecondWord.setText("Second word");
                 txtSecondWord.setBounds(157, 219, 86, 20);
                 add(txtSecondWord);
                 txtSecondWord.setColumns(10);
-
+                txtSecondWord.addMouseListener(new MouseAdapter() {
+                public void mouseClicked(MouseEvent e) {
+                txtSecondWord.setText("");
+                    }
+                 });
+                
                 btnAlign = new JButton("Align");
                 btnAlign.setBounds(253, 218, 89, 23);
                 add(btnAlign);
                 btnAlign.addActionListener(this);
                 
-                String[] columns = {""};
-                model = new DefaultTableModel(null,columns);
-
-                table = new JTable();
+                Object rowData[][] = {};
+                Object columnNames[] = {};
+                table = new JTable(rowData, columnNames);
+           
+                JScrollPane scrollPane = new JScrollPane();
+                model = new DefaultTableModel(rowData,columnNames);
                 table.setModel(model);
-                table.setTableHeader(null);
-
-                TableColumn column = null;
-                for (int i = 0; i < table.getColumnCount(); i++) {
-                    column = table.getColumnModel().getColumn(i);
-                   column.setMaxWidth(25);
-
-        }
-
-        table.setBounds(350, 10, 425, 300);
-
-        add(table);
-
+                
+                scrollPane.setBounds(350, 10, 425, 300);
+                scrollPane.getViewport().add(table);
+                add(scrollPane);
+        
         }
 
         public void DisplayTable(Object [][] data)
         {
-            JScrollPane scrollPane = new JScrollPane();
-            //String[] columns = {"", ""};
-            model = new DefaultTableModel(data,null);
-
-        table.setModel(model);
-        table.setTableHeader(null);
-
-        TableColumn column = null;
-        for (int i = 0; i < table.getColumnCount(); i++) {
-            column = table.getColumnModel().getColumn(i);
-
-                column.setMaxWidth(25);
-
-        }
-
-        table.setBounds(350, 10, 425, 300);
-        scrollPane.getViewport().add(table);
-        add(scrollPane);
-        //add(table);
-        //mainFrame.frameRevalidate();
+            ArrayList<String> col = new ArrayList<>();
+            for(int i=0; i< data[0].length; i++)
+                col.add("");
+           String column[]=col.toArray(new String[col.size()]);
+           // table = new JTable(data, col );
+            model = new DefaultTableModel(data,column);
+            table.setModel(model);
+          
         }
 
         @Override
