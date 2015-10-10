@@ -43,7 +43,7 @@ public class BacktrackController {
 	
 	public void backtrackAndSaveValues() {
 		
-		while(currentRow!=rowLength-2 && currentCol!=1) {
+		while(!(currentRow==rowLength-2 && currentCol==1)) {
 			updateAlignedString(getLeastValue());
 		}
 		
@@ -58,57 +58,80 @@ public class BacktrackController {
 	private void updateAlignedString(int leastValue) {
         String reversedFirstWord = new StringBuffer(firstWord).reverse().toString();
         
-		/** Check down value */
-		if(leastValue == (int)grid[currentRow+1][currentCol]) {
-			alignedFirstWord = alignedFirstWord.concat(String.valueOf(reversedFirstWord.charAt(currentRow)));
-			alignedSecondWord = alignedSecondWord.concat("_");
-                        backTrackPath.add(currentRow+1);
-                        backTrackPath.add(currentCol);
-			
-			currentRow++;
-			return;
-		}
-		/** Check diagonal value */
-		else if(leastValue == (int)grid[currentRow+1][currentCol-1]) {
-			alignedFirstWord = alignedFirstWord.concat(String.valueOf(reversedFirstWord.charAt(currentRow)));
-			alignedSecondWord = alignedSecondWord.concat(String.valueOf(secondWord.charAt(currentCol-2)));
-                        backTrackPath.add(currentRow+1);
-                        backTrackPath.add(currentCol-1);
-                        
-			currentRow++;
-			currentCol--;
-			return;
-		}
-		/** Check left value */
-		else if(leastValue == (int)grid[currentRow][currentCol-1]) {
-			alignedFirstWord = alignedFirstWord.concat("_");
-			alignedSecondWord = alignedSecondWord.concat(String.valueOf(reversedFirstWord.charAt(currentCol-2)));
-                        backTrackPath.add(currentRow);
-                        backTrackPath.add(currentCol-1);
-                        
-			currentCol--;
-			return;
+		/** If not yet bottom row */
+		if(currentRow<rowLength-2) {
+			/** Check down value */
+			if(leastValue == (int)grid[currentRow+1][currentCol]) {
+				alignedFirstWord = alignedFirstWord.concat(String.valueOf(reversedFirstWord.charAt(currentRow)));
+				alignedSecondWord = alignedSecondWord.concat("_");
+                                
+				
+				currentRow++;
+                                backTrackPath.add(currentRow);
+                                backTrackPath.add(currentCol);
+				return;
+			}
 		}
 		
+		/** If not yet extreme left column */
+		if( currentCol>1) {
+			/** Check left value */
+			if(leastValue == (int)grid[currentRow][currentCol-1]) {
+				alignedFirstWord = alignedFirstWord.concat("_");
+				alignedSecondWord = alignedSecondWord.concat(String.valueOf(secondWord.charAt(currentCol-2)));
+				
+                                
+				currentCol--;
+                                backTrackPath.add(currentRow);
+                                backTrackPath.add(currentCol);
+				return;
+			}
+		}
+		
+		/** If not yet bottom and extreme left column */
+		if(currentRow<rowLength-2 && currentCol>1) {
+			/** Check diagonal value */
+			if(leastValue == (int)grid[currentRow+1][currentCol-1]) {
+				alignedFirstWord = alignedFirstWord.concat(String.valueOf(reversedFirstWord.charAt(currentRow)));
+				alignedSecondWord = alignedSecondWord.concat(String.valueOf(secondWord.charAt(currentCol-2)));
+                                
+				currentRow++;
+				currentCol--;
+                                backTrackPath.add(currentRow);
+                                backTrackPath.add(currentCol);
+				return;
+			}
+		}
 	}
 
 	private int getLeastValue() {
 		
-		int leastValue;
+		int leastValue = (int)grid[currentRow][currentCol];
 		
-		/** Get down value */
-		leastValue = (int) grid[currentRow+1][currentCol];
+		/** If not yet bottom row */
+		if(currentRow<rowLength-2) {
+			/** Get down value */
+			if((int)grid[currentRow+1][currentCol] < leastValue)
+				leastValue = (int) grid[currentRow+1][currentCol];
+		}
 		
-		/** Get diagonal value */
-		if((int)grid[currentRow+1][currentCol-1] < leastValue)
-			leastValue = (int)grid[currentRow+1][currentCol-1];
+		/** If not yet extreme left column */
+		if(currentCol>1) {
+			/** Get left value */
+			if((int)grid[currentRow][currentCol-1] < leastValue)
+				leastValue = (int)grid[currentRow][currentCol-1];
+		}
 		
-		/** Get left value */
-		if((int)grid[currentRow][currentCol-1] < leastValue)
-			leastValue = (int)grid[currentRow][currentCol-1];
+		/** If not yet bottom and extreme left column */
+		if(currentRow<rowLength-2 && currentCol>1) {
+			/** Get diagonal value */
+			if((int)grid[currentRow+1][currentCol-1] < leastValue)
+				leastValue = (int)grid[currentRow+1][currentCol-1];
+		}
 		
 		return leastValue;
 	}
+	
 
         public ArrayList<Integer> getBacktrackPath()
         {
@@ -122,4 +145,5 @@ public class BacktrackController {
 	public String getAlignedSecondWord() {
 		return alignedSecondWord;
 	}
+
 }
