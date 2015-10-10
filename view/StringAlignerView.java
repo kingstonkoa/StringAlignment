@@ -12,6 +12,8 @@ import javax.swing.border.Border;
 
 import controller.BacktrackController;
 import controller.StringAlignerController;
+import java.awt.Color;
+import java.awt.Component;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
@@ -20,6 +22,7 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 
@@ -29,9 +32,11 @@ public class StringAlignerView extends JPanel implements IStringAlignerView, Act
 	/** Controller */
 	private StringAlignerController controller;
 	private BacktrackController backtrackController;
+	
     private Object [][] grid;
     private DefaultTableModel model;
-    
+    private ArrayList<Integer> backtrackPath;
+	
 	/** Panel components */
     private JTable table;
 	private JButton btnAlign;
@@ -79,6 +84,7 @@ public class StringAlignerView extends JPanel implements IStringAlignerView, Act
             Object rowData[][] = {};
             Object columnNames[] = {};
             table = new JTable(rowData, columnNames);
+          //  table.setDefaultRenderer(Object.class, new CellHighlighterRenderer());
        
             JScrollPane scrollPane = new JScrollPane();
             model = new DefaultTableModel(rowData,columnNames);
@@ -88,6 +94,26 @@ public class StringAlignerView extends JPanel implements IStringAlignerView, Act
             scrollPane.getViewport().add(table);
             add(scrollPane);
     
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent ae) {
+        if(ae.getSource() == btnAlign) {
+                String firstWord = txtFirstWord.getText();
+                String secondWord = txtSecondWord.getText();
+                System.out.println("First Word: " + firstWord);
+                System.out.println("Second Word: " + secondWord);
+
+                controller.storeUserInputs(firstWord, secondWord);
+                controller.buildAndInitializeTable();
+                controller.computeTableContents();
+                controller.PrintTableContents();
+                grid = controller.getGrid();
+                backtrackController.storeInputs(firstWord, secondWord, grid);
+                backtrackController.backtrackAndSaveValues();
+                backtrackPath = backtrackController.getBacktrackPath();
+                DisplayTable(grid);
+        }
     }
 
     public void DisplayTable(Object [][] data)
@@ -119,27 +145,7 @@ public class StringAlignerView extends JPanel implements IStringAlignerView, Act
     public void keyTyped(KeyEvent arg0) {
             // TODO Auto-generated method stub
 
-    }
-
-    @Override
-    public void actionPerformed(ActionEvent ae) {
-        if(ae.getSource() == btnAlign) {
-                String firstWord = txtFirstWord.getText();
-                String secondWord = txtSecondWord.getText();
-                System.out.println("First Word: " + firstWord);
-                System.out.println("Second Word: " + secondWord);
-
-                controller.storeUserInputs(firstWord, secondWord);
-                controller.buildAndInitializeTable();
-                controller.computeTableContents();
-                controller.PrintTableContents();
-                grid = controller.getGrid();
-                backtrackController.storeInputs(firstWord, secondWord, grid);
-                backtrackController.backtrackAndSaveValues();
-                DisplayTable(grid);
-        }
-    }
-    
+    }    
 
     public void displayResults() {
     	 setLayout(null);

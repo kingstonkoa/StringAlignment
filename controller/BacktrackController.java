@@ -1,5 +1,6 @@
 package controller;
 
+import java.util.ArrayList;
 import view.IStringAlignerView;
 import view.StringAlignerView;
 
@@ -19,6 +20,7 @@ public class BacktrackController {
     
     private String alignedFirstWord;
     private String alignedSecondWord;
+    private ArrayList<Integer> backTrackPath = new ArrayList<>();
     
 	
 	public BacktrackController(StringAlignerView stringAlignerView) {
@@ -92,7 +94,6 @@ public class BacktrackController {
 				return;
 			}
 		}
-		
 	}
 
 	private int getLeastValue() {
@@ -130,5 +131,10 @@ public class BacktrackController {
 	public String getAlignedSecondWord() {
 		return alignedSecondWord;
 	}
+
+    public ArrayList<Integer> getBacktrackPath()
+    {
+        return backTrackPath;
+    }
 
 }
