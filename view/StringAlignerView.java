@@ -12,6 +12,7 @@ import javax.swing.border.Border;
 
 import controller.BacktrackController;
 import controller.StringAlignerController;
+
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.event.MouseAdapter;
@@ -54,6 +55,17 @@ public class StringAlignerView extends JPanel implements IStringAlignerView, Act
             //JLabel lblSex = new JLabel("SEX");
             //lblSex.setBounds(216, 5, 18, 14);
             //add(lblSex);
+            
+            firstWord = new JLabel();
+            firstWord.setSize(250, 15);
+            firstWord.setLocation(60, 100);
+            secondWord = new JLabel();
+            secondWord.setSize(250, 15);
+            secondWord.setLocation(60, 120);
+            add(firstWord);
+            add(secondWord);
+            firstWord.setVisible(false);
+            secondWord.setVisible(false);
 
             txtFirstWord = new JTextField();
             txtFirstWord.setText("First word");
@@ -92,7 +104,7 @@ public class StringAlignerView extends JPanel implements IStringAlignerView, Act
             table.setModel(model);
             
             scrollPane.setBounds(350, 10, 425, 300);
-            scrollPane.getViewport().add(table);
+            scrollPane.setViewportView(table);
             scrollPane.getViewport().setBackground(Color.LIGHT_GRAY);
             add(scrollPane);
     
@@ -115,6 +127,7 @@ public class StringAlignerView extends JPanel implements IStringAlignerView, Act
                 backtrackController.backtrackAndSaveValues();
                 backtrackPath = backtrackController.getBacktrackPath();
                 DisplayTable(grid);
+                displayResults(backtrackController.getAlignedFirstWord(), backtrackController.getAlignedSecondWord());
         }
     }
 
@@ -178,20 +191,17 @@ public class StringAlignerView extends JPanel implements IStringAlignerView, Act
 }
     
 
-    public void displayResults() {
+    public void displayResults(String first, String second) {
     	 setLayout(null);
          controller = new StringAlignerController(this);
          backtrackController = new BacktrackController(this);
 
-         firstWord = new JLabel();
-         firstWord.setText("FIRST: " + backtrackController.getAlignedFirstWord());
-//             txtFirstWord.setBounds(61, 219, 86, 20);
-         add(firstWord);
+         firstWord.setText("FIRST: " + first);
+         firstWord.setVisible(true);
 
-         secondWord = new JLabel();
-         secondWord.setText("SECOND: " + backtrackController.getAlignedSecondWord());
-//             secondWord.setBounds(157, 219, 86, 20);
-         add(secondWord);
+         secondWord.setText("SECOND: " + second);
+         secondWord.setVisible(true);
+         this.setVisible(true);
     }
     
     
