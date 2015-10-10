@@ -12,6 +12,8 @@ import javax.swing.border.Border;
 
 import controller.BacktrackController;
 import controller.StringAlignerController;
+import java.awt.Color;
+import java.awt.Component;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
@@ -20,6 +22,7 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 
@@ -34,7 +37,8 @@ public class StringAlignerView extends JPanel implements IStringAlignerView, Act
 	private JButton btnAlign;
         private Object [][] grid;
         private DefaultTableModel model;
-         private JTable table;
+        private JTable table;
+        private ArrayList<Integer> backtrackPath;
 	
 	/** Panel components */
         	
@@ -77,6 +81,7 @@ public class StringAlignerView extends JPanel implements IStringAlignerView, Act
                 Object rowData[][] = {};
                 Object columnNames[] = {};
                 table = new JTable(rowData, columnNames);
+              //  table.setDefaultRenderer(Object.class, new CellHighlighterRenderer());
            
                 JScrollPane scrollPane = new JScrollPane();
                 model = new DefaultTableModel(rowData,columnNames);
@@ -134,8 +139,11 @@ public class StringAlignerView extends JPanel implements IStringAlignerView, Act
                         grid = controller.getGrid();
                         backtrackController.storeInputs(firstWord, secondWord, grid);
                         backtrackController.backtrackAndSaveValues();
+                        backtrackPath = backtrackController.getBacktrackPath();
                         DisplayTable(grid);
                 }
 
         }
+        
+       
 }

@@ -1,5 +1,6 @@
 package controller;
 
+import java.util.ArrayList;
 import view.IStringAlignerView;
 import view.StringAlignerView;
 
@@ -19,6 +20,7 @@ public class BacktrackController {
     
     private String alignedFirstWord;
     private String alignedSecondWord;
+    private ArrayList<Integer> backTrackPath = new ArrayList<>();
     
 	
 	public BacktrackController(StringAlignerView stringAlignerView) {
@@ -59,6 +61,8 @@ public class BacktrackController {
 		if(leastValue == (int)grid[currentRow+1][currentCol]) {
 			alignedFirstWord = alignedFirstWord.concat(String.valueOf(reversedFirstWord.charAt(currentRow)));
 			alignedSecondWord = alignedSecondWord.concat("_");
+                        backTrackPath.add(currentRow+1);
+                        backTrackPath.add(currentCol);
 			
 			currentRow++;
 			return;
@@ -67,7 +71,9 @@ public class BacktrackController {
 		else if(leastValue == (int)grid[currentRow+1][currentCol-1]) {
 			alignedFirstWord = alignedFirstWord.concat(String.valueOf(reversedFirstWord.charAt(currentRow)));
 			alignedSecondWord = alignedSecondWord.concat(String.valueOf(secondWord.charAt(currentCol-2)));
-			
+                        backTrackPath.add(currentRow+1);
+                        backTrackPath.add(currentCol-1);
+                        
 			currentRow++;
 			currentCol--;
 			return;
@@ -76,7 +82,9 @@ public class BacktrackController {
 		else if(leastValue == (int)grid[currentRow][currentCol-1]) {
 			alignedFirstWord = alignedFirstWord.concat("_");
 			alignedSecondWord = alignedSecondWord.concat(String.valueOf(reversedFirstWord.charAt(currentCol-2)));
-			
+                        backTrackPath.add(currentRow);
+                        backTrackPath.add(currentCol-1);
+                        
 			currentCol--;
 			return;
 		}
@@ -100,5 +108,10 @@ public class BacktrackController {
 		
 		return leastValue;
 	}
+
+        public ArrayList<Integer> getBacktrackPath()
+        {
+            return backTrackPath;
+        }
 
 }
