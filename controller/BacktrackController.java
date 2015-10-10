@@ -43,7 +43,6 @@ public class BacktrackController {
 		
 		while(!(currentRow==rowLength-2 && currentCol==1)) {
 			updateAlignedString(getLeastValue());
-			System.out.println(currentRow + " " + currentCol);
 		}
 		
 		alignedFirstWord = new StringBuffer(alignedFirstWord).reverse().toString();
@@ -122,6 +121,14 @@ public class BacktrackController {
 		}
 		
 		return leastValue;
+	}
+	
+	public String getAlignedFirstWord() {
+		return alignedFirstWord;
+	}
+	
+	public String getAlignedSecondWord() {
+		return alignedSecondWord;
 	}
 
 }
