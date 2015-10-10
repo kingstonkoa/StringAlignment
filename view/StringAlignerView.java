@@ -158,8 +158,16 @@ public class StringAlignerView extends JPanel implements IStringAlignerView, Act
 
     @Override
     public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+        
+      /*  Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);   
+            for(int i=0; i<grid.length; i++) {
+        for(int j=0; j<grid[i].length; j++) {
+            if(row == i && column == j)
+                c.setBackground(Color.white);
+        }
+    }*/
         super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-                
+        
         for(int i=0; i<backtrackPath.size(); i+=2)
         {
             if(i<backtrackPath.size()-1)
