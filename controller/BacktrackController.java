@@ -23,8 +23,6 @@ public class BacktrackController {
 	
 	public BacktrackController(StringAlignerView stringAlignerView) {
 		this.stringAlignerView = stringAlignerView;
-		alignedFirstWord = "";
-		alignedSecondWord = "";
 	}
 
 	public void storeInputs(String firstWord, String secondWord, Object[][] grid) {
@@ -33,6 +31,9 @@ public class BacktrackController {
 		this.grid = grid;
         this.rowLength = firstWord.length()+2;
         this.colLength = secondWord.length()+2;
+
+		alignedFirstWord = "";
+		alignedSecondWord = "";
         
         currentRow = 0;
         currentCol = colLength-1;
