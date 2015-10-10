@@ -49,10 +49,6 @@ public class BacktrackController {
 		
 		alignedFirstWord = new StringBuffer(alignedFirstWord).reverse().toString();
 		alignedSecondWord = new StringBuffer(alignedSecondWord).reverse().toString();
-		
-		System.out.println("FIRST: " + alignedFirstWord);	
-		System.out.println("SECND: " + alignedSecondWord);
-		
 	}
 	
 	private void updateAlignedString(int leastValue) {
