@@ -44,6 +44,7 @@ public class StringAlignerView extends JPanel implements IStringAlignerView, Act
 	private JTextField txtSecondWord;
 	private JLabel firstWord;
 	private JLabel secondWord;
+        private JScrollPane scrollPane;
         	
     public StringAlignerView(MainFrame mainFrame) {
             setLayout(null);
@@ -86,12 +87,13 @@ public class StringAlignerView extends JPanel implements IStringAlignerView, Act
             table = new JTable(rowData, columnNames);
             table.setDefaultRenderer(Object.class, new CellHighlighterRenderer());
        
-            JScrollPane scrollPane = new JScrollPane();
+            scrollPane = new JScrollPane();
             model = new DefaultTableModel(rowData,columnNames);
             table.setModel(model);
             
             scrollPane.setBounds(350, 10, 425, 300);
             scrollPane.getViewport().add(table);
+            scrollPane.getViewport().setBackground(Color.LIGHT_GRAY);
             add(scrollPane);
     
     }
@@ -157,7 +159,7 @@ public class StringAlignerView extends JPanel implements IStringAlignerView, Act
     @Override
     public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
         super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-
+                
         for(int i=0; i<backtrackPath.size(); i+=2)
         {
             if(i<backtrackPath.size()-1)
