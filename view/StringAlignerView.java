@@ -39,6 +39,8 @@ public class StringAlignerView extends JPanel implements IStringAlignerView, Act
         private DefaultTableModel model;
         private JTable table;
         private ArrayList<Integer> backtrackPath;
+    private JLabel firstWord;
+    private JLabel secondWord;
 	
 	/** Panel components */
         	
@@ -143,6 +145,22 @@ public class StringAlignerView extends JPanel implements IStringAlignerView, Act
                         DisplayTable(grid);
                 }
 
+        }
+        
+         public void displayResults() {
+        	 setLayout(null);
+             controller = new StringAlignerController(this);
+             backtrackController = new BacktrackController(this);
+
+             firstWord = new JLabel();
+             firstWord.setText("FIRST: " + backtrackController.getAlignedFirstWord());
+//             txtFirstWord.setBounds(61, 219, 86, 20);
+             add(firstWord);
+
+             secondWord = new JLabel();
+             secondWord.setText("SECOND: " + backtrackController.getAlignedSecondWord());
+//             secondWord.setBounds(157, 219, 86, 20);
+             add(secondWord);
         }
         
        

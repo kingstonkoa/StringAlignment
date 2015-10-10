@@ -114,5 +114,12 @@ public class BacktrackController {
         {
             return backTrackPath;
         }
-
+        
+        public String getAlignedFirstWord() {
+		return alignedFirstWord;
+	}
+	
+	public String getAlignedSecondWord() {
+		return alignedSecondWord;
+	}
 }
