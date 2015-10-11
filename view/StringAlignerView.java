@@ -196,7 +196,7 @@ public class StringAlignerView extends JPanel implements IStringAlignerView, Act
          controller = new StringAlignerController(this);
          backtrackController = new BacktrackController(this);
 
-         firstWord.setText("FIRST: " + first);
+         firstWord.setText("FIRST:      " + first);
          firstWord.setVisible(true);
 
          secondWord.setText("SECOND: " + second);
