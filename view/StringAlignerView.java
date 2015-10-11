@@ -34,19 +34,21 @@ public class StringAlignerView extends JPanel implements IStringAlignerView, Act
 	private StringAlignerController controller;
 	private BacktrackController backtrackController;
 	
-    private Object [][] grid;
-    private DefaultTableModel model;
-    private ArrayList<Integer> backtrackPath;
-	
-	/** Panel components */
-    private JTable table;
-	private JButton btnAlign;
-    private JTextField txtFirstWord;
-	private JTextField txtSecondWord;
-	private JLabel firstWord;
-	private JLabel secondWord;
+        private Object [][] grid;
+        private Object [][] results;
+        private DefaultTableModel model;
+        private ArrayList<Integer> backtrackPath;
+
+            /** Panel components */
+        private JTable table;
+        private JTable tableResults;
+        private JButton btnAlign;
+        private JTextField txtFirstWord;
+        private JTextField txtSecondWord;
+        private JLabel firstWord;
+        private JLabel secondWord;
         private JScrollPane scrollPane;
-        	
+
     public StringAlignerView(MainFrame mainFrame) {
             setLayout(null);
             controller = new StringAlignerController(this);
@@ -57,15 +59,26 @@ public class StringAlignerView extends JPanel implements IStringAlignerView, Act
             //add(lblSex);
             
             firstWord = new JLabel();
-            firstWord.setSize(250, 15);
-            firstWord.setLocation(60, 100);
+            firstWord.setSize(200, 10);
+            firstWord.setLocation(30, 100);
             secondWord = new JLabel();
-            secondWord.setSize(250, 15);
-            secondWord.setLocation(60, 120);
+            secondWord.setSize(200, 10);
+            secondWord.setLocation(30, 120);
             add(firstWord);
             add(secondWord);
             firstWord.setVisible(false);
             secondWord.setVisible(false);
+            
+            Object rowData[][] = {}; // dummy data
+            Object columnNames[] = {}; // dummy data
+            
+            tableResults = new JTable(rowData, columnNames); // dummy data
+            model = new DefaultTableModel(rowData,columnNames); // dummy data
+            tableResults.setModel(model); // dummy data
+            tableResults.setBounds(95, 100, 250, 30);
+            tableResults.setBackground(this.getBackground()); // comoflauge
+            tableResults.setShowGrid(false); // remove border
+            add(tableResults);
 
             txtFirstWord = new JTextField();
             txtFirstWord.setText("First word");
@@ -94,8 +107,8 @@ public class StringAlignerView extends JPanel implements IStringAlignerView, Act
             add(btnAlign);
             btnAlign.addActionListener(this);
             
-            Object rowData[][] = {};
-            Object columnNames[] = {};
+            //rowData[][] = {};
+            //columnNames[] = {};
             table = new JTable(rowData, columnNames);
             table.setDefaultRenderer(Object.class, new CellHighlighterRenderer());
        
@@ -195,14 +208,38 @@ public class StringAlignerView extends JPanel implements IStringAlignerView, Act
     	 setLayout(null);
          controller = new StringAlignerController(this);
          backtrackController = new BacktrackController(this);
+         
+         /*break to chars**/
+         char[] firstToCharArray = first.toCharArray();
+         char[] secondToCharArray = second.toCharArray();
+         
+         /*add to 2D- Array**/
+         char results[][] = {firstToCharArray,secondToCharArray};
+         
+         /*convert char to Object**/
+         Object[][] objectSet = new Object[results.length][results[0].length];
 
-         firstWord.setText("FIRST:      " + first);
+            for (int i = 0; i < results.length; i++) {
+                for (int j = 0; j < results[0].length; j ++) {
+                    objectSet[i][j] = results[i][j];
+                }
+            }
+         /*add blank headers**/
+         ArrayList<String> col = new ArrayList<>();
+        for(int i=0; i< objectSet[0].length; i++)
+            col.add("");
+        String column[]=col.toArray(new String[col.size()]);
+
+        model = new DefaultTableModel(objectSet,column);
+        tableResults.setModel(model);
+        
+
+         firstWord.setText("FIRST:");
          firstWord.setVisible(true);
 
-         secondWord.setText("SECOND: " + second);
+         secondWord.setText("SECOND:");
          secondWord.setVisible(true);
          this.setVisible(true);
     }
-    
-    
+      
 }
